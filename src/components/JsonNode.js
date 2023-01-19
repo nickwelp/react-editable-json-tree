@@ -176,25 +176,25 @@ class JsonNode extends Component {
                     logger={logger}
                     onSubmitValueParser={onSubmitValueParser}
                 />);
-            case dataTypes.STRING:
-                return (<JsonValue
-                    name={name}
-                    value={`"${data}"`}
-                    originalValue={data}
-                    keyPath={keyPath}
-                    deep={deep}
-                    handleRemove={handleRemove}
-                    handleUpdateValue={handleUpdateValue}
-                    readOnly={readOnly}
-                    dataType={dataType}
-                    getStyle={getStyle}
-                    cancelButtonElement={cancelButtonElement}
-                    editButtonElement={editButtonElement}
-                    inputElementGenerator={inputElementGenerator}
-                    minusMenuElement={minusMenuElement}
-                    logger={logger}
-                    onSubmitValueParser={onSubmitValueParser}
-                />);
+  
+                // return (<JsonValue
+                //     name={name}
+                //     value={`"${data}"`}
+                //     originalValue={data}
+                //     keyPath={keyPath}
+                //     deep={deep}
+                //     handleRemove={handleRemove}
+                //     handleUpdateValue={handleUpdateValue}
+                //     readOnly={readOnly}
+                //     dataType={dataType}
+                //     getStyle={getStyle}
+                //     cancelButtonElement={cancelButtonElement}
+                //     editButtonElement={editButtonElement}
+                //     inputElementGenerator={inputElementGenerator}
+                //     minusMenuElement={minusMenuElement}
+                //     logger={logger}
+                //     onSubmitValueParser={onSubmitValueParser}
+                // />);
             case dataTypes.NUMBER:
                 return (<JsonValue
                     name={name}
@@ -290,10 +290,11 @@ class JsonNode extends Component {
                     logger={logger}
                     onSubmitValueParser={onSubmitValueParser}
                 />);
-            case dataTypes.FUNCTION:
+            case dataTypes.STRING:
+            // case dataTypes.FUNCTION:
                 return (<JsonFunctionValue
                     name={name}
-                    value={functionToString(data)}
+                    value={data}
                     originalValue={data}
                     keyPath={keyPath}
                     deep={deep}

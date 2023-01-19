@@ -76,7 +76,7 @@ const defaultProps = {
     beforeAddAction: (key, keyPath, deep, newValue) => new Promise(resolve => resolve()),
     beforeUpdateAction: (key, keyPath, deep, oldValue, newValue) => new Promise(resolve => resolve()),
     logger: { error: () => {} },
-    inputElement: (usage, keyPath, deep, keyName, data, dataType) => <input />,
+    inputElement: (usage, keyPath, deep, keyName, data, dataType) => <textarea />,
     textareaElement: (usage, keyPath, deep, keyName, data, dataType) => <textarea />,
     /* eslint-enable no-unused-vars */
     allowFunctionEvaluation: true,
