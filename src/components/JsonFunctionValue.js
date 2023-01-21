@@ -41,8 +41,8 @@ const defaultProps = {
     deep: 0,
     handleUpdateValue: () => {
     },
-    editButtonElement: <button>e</button>,
-    cancelButtonElement: <button>c</button>,
+    editButtonElement: <button>Apply</button>,
+    cancelButtonElement: <button>Cancel</button>,
     minusMenuElement: <span> - </span>,
 };
 
@@ -61,7 +61,7 @@ class JsonFunctionValue extends Component {
             name: props.name,
             keyPath,
             deep: props.deep,
-            editEnabled: false,
+            editEnabled: true,
             inputRef: null,
         };
 
@@ -143,6 +143,7 @@ class JsonFunctionValue extends Component {
             Escape: this.handleCancelEdit,
             Enter: this.handleEdit,
         };
+        console.log('keyPath', keyPath);
 
         const style = getStyle(name, originalValue, keyPath, deep, dataType);
         let result = null;
@@ -168,7 +169,6 @@ class JsonFunctionValue extends Component {
             result = (<span className="rejt-edit-form" style={style.editForm}>
                 {textareaElementLayout} {cancelButtonElementLayout}{editButtonElementLayout}
             </span>);
-            minusElement = null;
         } else {
             /* eslint-disable jsx-a11y/no-static-element-interactions */
             result = (
@@ -178,21 +178,22 @@ class JsonFunctionValue extends Component {
                     {value}
                 </span>
             );
-            /* eslint-enable */
-            const minusMenuLayout = React.cloneElement(minusMenuElement, {
-                onClick: handleRemove,
-                className: 'rejt-minus-menu',
-                style: style.minus,
-            });
-            minusElement = (resultOnlyResult) ? null : minusMenuLayout;
         }
-
-        return (
-            <li className="rejt-function-value-node" style={style.li}>
-                <span className="rejt-name" style={style.name}>{name} : </span>{result}
-                {minusElement}
-            </li>
-        );
+        if (!result || result === "") return null;
+        if (keyPath.includes('textLine')
+            || keyPath.includes('title')
+            || keyPath.includes('description')
+            || keyPath.includes('name')
+            || keyPath.includes('stringValue')
+            || keyPath.includes('stringsList')
+            ) {
+            return (
+                <li className="rejt-function-value-node" style={style.li}>
+                    <span className="rejt-name" style={style.name}>{name} : </span>{result}
+                </li>
+            );
+        }
+        return null;
     }
 }
 

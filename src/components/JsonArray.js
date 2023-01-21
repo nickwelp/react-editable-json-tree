@@ -220,37 +220,36 @@ class JsonArray extends Component {
     }
 
     renderCollapsed() {
-        const { name, data, keyPath, deep } = this.state;
-        const { handleRemove, readOnly, getStyle, dataType, minusMenuElement } = this.props;
+        const {
+            name, data, keyPath, deep,
+        } = this.state;
+        const { getStyle, dataType } = this.props;
 
-        const { minus, collapsed } = getStyle(name, data, keyPath, deep, dataType);
+        const { collapsed } = getStyle(name, data, keyPath, deep, dataType);
         const collapseValue = ' [...]';
         const numberOfItems = data.length;
-        let minusElement = null;
-        // Check if readOnly is activated
-        if (!readOnly(name, data, keyPath, deep, dataType)) {
-            const minusMenuLayout = React.cloneElement(minusMenuElement, {
-                onClick: handleRemove,
-                className: 'rejt-minus-menu',
-                style: minus,
-            });
-            minusElement = (deep !== -1) ? minusMenuLayout : null;
-        }
 
         const itemName = (numberOfItems > 1) ? 'items' : 'item';
 
         /* eslint-disable jsx-a11y/no-static-element-interactions */
-        return (<span className="rejt-collapsed">
-            <span className="rejt-collapsed-text" style={collapsed} onClick={this.handleCollapseMode}>
-                {collapseValue} {numberOfItems} {itemName}
+        return (
+            <span className="rejt-collapsed">
+                <span className="rejt-collapsed-text" style={collapsed} onClick={this.handleCollapseMode}>
+                    {collapseValue}
+                    {' '}
+                    {numberOfItems}
+                    {' '}
+                    {itemName}
+                </span>
             </span>
-            {minusElement}
-        </span>);
+        );
         /* eslint-enable */
     }
 
     renderNotCollapsed() {
-        const { name, data, keyPath, deep, addFormVisible, nextDeep } = this.state;
+        const {
+            name, data, keyPath, deep, addFormVisible, nextDeep,
+        } = this.state;
         const {
             isCollapsed,
             handleRemove,
@@ -270,8 +269,10 @@ class JsonArray extends Component {
             beforeUpdateAction,
             logger,
             onSubmitValueParser,
-            } = this.props;
-        const { minus, plus, delimiter, ul, addForm } = getStyle(name, data, keyPath, deep, dataType);
+        } = this.props;
+        const {
+            minus, plus, delimiter, ul, addForm,
+        } = getStyle(name, data, keyPath, deep, dataType);
 
         let minusElement = null;
         const readOnlyResult = readOnly(name, data, keyPath, deep, dataType);
@@ -286,32 +287,34 @@ class JsonArray extends Component {
         }
 
         const list = data
-            .map((item, index) => <JsonNode
-                key={index}
-                name={`${index}`}
-                data={item}
-                keyPath={keyPath}
-                deep={nextDeep}
-                isCollapsed={isCollapsed}
-                handleRemove={this.handleRemoveItem(index)}
-                handleUpdateValue={this.handleEditValue}
-                onUpdate={this.onChildUpdate}
-                onDeltaUpdate={onDeltaUpdate}
-                readOnly={readOnly}
-                getStyle={getStyle}
-                addButtonElement={addButtonElement}
-                cancelButtonElement={cancelButtonElement}
-                editButtonElement={editButtonElement}
-                inputElementGenerator={inputElementGenerator}
-                textareaElementGenerator={textareaElementGenerator}
-                minusMenuElement={minusMenuElement}
-                plusMenuElement={plusMenuElement}
-                beforeRemoveAction={beforeRemoveAction}
-                beforeAddAction={beforeAddAction}
-                beforeUpdateAction={beforeUpdateAction}
-                logger={logger}
-                onSubmitValueParser={onSubmitValueParser}
-            />);
+            .map((item, index) => (
+                <JsonNode
+                    key={keyPath.join('_')}
+                    name={`${index}`}
+                    data={item}
+                    keyPath={keyPath}
+                    deep={nextDeep}
+                    isCollapsed={isCollapsed}
+                    handleRemove={this.handleRemoveItem(index)}
+                    handleUpdateValue={this.handleEditValue}
+                    onUpdate={this.onChildUpdate}
+                    onDeltaUpdate={onDeltaUpdate}
+                    readOnly={readOnly}
+                    getStyle={getStyle}
+                    addButtonElement={addButtonElement}
+                    cancelButtonElement={cancelButtonElement}
+                    editButtonElement={editButtonElement}
+                    inputElementGenerator={inputElementGenerator}
+                    textareaElementGenerator={textareaElementGenerator}
+                    minusMenuElement={minusMenuElement}
+                    plusMenuElement={plusMenuElement}
+                    beforeRemoveAction={beforeRemoveAction}
+                    beforeAddAction={beforeAddAction}
+                    beforeUpdateAction={beforeUpdateAction}
+                    logger={logger}
+                    onSubmitValueParser={onSubmitValueParser}
+                />
+            ));
 
         const onlyValue = true;
         let menu = null;
@@ -322,46 +325,80 @@ class JsonArray extends Component {
                 className: 'rejt-plus-menu',
                 style: plus,
             });
-            menu = addFormVisible ?
-                (<span className="rejt-add-form" style={addForm}><JsonAddValue
-                    handleAdd={this.handleAddValueAdd}
-                    handleCancel={this.handleAddValueCancel}
-                    onlyValue={onlyValue}
-                    addButtonElement={addButtonElement}
-                    cancelButtonElement={cancelButtonElement}
-                    inputElementGenerator={inputElementGenerator}
-                    keyPath={keyPath}
-                    deep={deep}
-                    onSubmitValueParser={onSubmitValueParser}
-                /></span>) :
-                (<span>
-                    {plusMenuLayout} {minusElement}
-                </span>);
+            menu = addFormVisible
+                ? (
+                    <span className="rejt-add-form" style={addForm}>
+                        <JsonAddValue
+                            handleAdd={this.handleAddValueAdd}
+                            handleCancel={this.handleAddValueCancel}
+                            onlyValue={onlyValue}
+                            addButtonElement={addButtonElement}
+                            cancelButtonElement={cancelButtonElement}
+                            inputElementGenerator={inputElementGenerator}
+                            keyPath={keyPath}
+                            deep={deep}
+                            onSubmitValueParser={onSubmitValueParser}
+                        />
+                    </span>
+                )
+                : (
+                    <span>
+                        {' '}
+                    </span>
+                );
         }
 
         const startObject = '[';
         const endObject = ']';
-        return (<span className="rejt-not-collapsed">
-            <span className="rejt-not-collapsed-delimiter" style={delimiter}>{startObject}</span>
-            <ul className="rejt-not-collapsed-list" style={ul}>
-                {list}
-            </ul>
-            <span className="rejt-not-collapsed-delimiter" style={delimiter}>{endObject}</span>
-            {menu}
-        </span>);
+        return (
+            <span className="rejt-not-collapsed">
+                <span className="rejt-not-collapsed-delimiter" style={delimiter}>{startObject}</span>
+                <ul className="rejt-not-collapsed-list" style={ul}>
+                    {list}
+                </ul>
+                <span className="rejt-not-collapsed-delimiter" style={delimiter}>{endObject}</span>
+                {menu}
+            </span>
+        );
     }
 
     render() {
-        const { name, collapsed, data, keyPath, deep } = this.state;
+        const {
+            name, collapsed, data, keyPath, deep,
+        } = this.state;
         const { dataType, getStyle } = this.props;
         const value = collapsed ? this.renderCollapsed() : this.renderNotCollapsed();
         const style = getStyle(name, data, keyPath, deep, dataType);
 
         /* eslint-disable jsx-a11y/no-static-element-interactions */
+        if (
+            keyPath.includes('overridenAttributes')
+            || keyPath.includes('abilityScores')
+            || keyPath.includes('savingThrows')
+            || keyPath.includes('skills')
+            || keyPath.includes('attack1')
+            || keyPath.includes('attack2')
+            || keyPath.includes('attack3')
+            || keyPath.includes('localPosition')
+            // || keyPath.includes('parameterValues')
+            || keyPath.includes('flavorFlags')
+            || keyPath.includes('functors')
+            || keyPath.includes('staticRoleNames')
+            || keyPath.includes('userProps')
+            || keyPath.includes('occurencesList')
+            || keyPath.includes('destinationsList')
+        ) {
+            return null;
+        }
         return (
             <div className="rejt-array-node">
                 <span onClick={this.handleCollapseMode}>
-                    <span className="rejt-name" style={style.name}>{name} : </span>
+                    <span className="rejt-name" style={style.name}>
+                        {name}
+                        {' '}
+                        :
+                        {' '}
+                    </span>
                 </span>
                 {value}
             </div>

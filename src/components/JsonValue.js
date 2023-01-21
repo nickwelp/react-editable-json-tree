@@ -39,8 +39,8 @@ const defaultProps = {
     keyPath: [],
     deep: 0,
     handleUpdateValue: () => Promise.resolve(),
-    editButtonElement: <button>e</button>,
-    cancelButtonElement: <button>c</button>,
+    editButtonElement: <button>Apply</button>,
+    cancelButtonElement: <button>Cancel</button>,
     minusMenuElement: <span> - </span>,
 };
 
@@ -181,14 +181,14 @@ class JsonValue extends Component {
                 style: style.minus,
             });
             minusElement = (readOnlyResult) ? null : minusMenuLayout;
-        }
+        }   
+        return null;
 
-        return (
-            <li className="rejt-value-node" style={style.li}>
-                <span className="rejt-name" style={style.name}>{name}: </span>{result}
-                {minusElement}
-            </li>
-        );
+        // return (
+        //     <li className="rejt-value-node" style={style.li}>
+        //         <span className="rejt-name" style={style.name}>{name}: </span>{result}
+        //     </li>
+        // );
     }
 }
 

@@ -5,7 +5,7 @@ import $a6H0q$proptypes from "prop-types";
  * Author: Alexandre Havrileck (Oxyno-zeta)
  * Date: 13/10/16
  * Licence: See Readme
- */ /* ************************************* */ /* ********       IMPORTS       ******** */ /* ************************************* */ 
+ */ /* ************************************* */ /* ********     IMPORTS     ******** */ /* ************************************* */ 
 
 /*
  * Author: Alexandre Havrileck (Oxyno-zeta)
@@ -90,8 +90,8 @@ const $5bdc19770f09e5f2$var$defaultProps = {
     keyPath: [],
     deep: 0,
     handleUpdateValue: ()=>Promise.resolve(),
-    editButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "e"),
-    cancelButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "c"),
+    editButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "Apply"),
+    cancelButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "Cancel"),
     minusMenuElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("span", null, " - ")
 };
 /* ************************************* */ /* ********      COMPONENT      ******** */ /* ************************************* */ class $5bdc19770f09e5f2$var$JsonValue extends (0, $a6H0q$Component) {
@@ -175,13 +175,12 @@ const $5bdc19770f09e5f2$var$defaultProps = {
             });
             minusElement = readOnlyResult ? null : minusMenuLayout;
         }
-        return /*#__PURE__*/ (0, $a6H0q$react).createElement("li", {
-            className: "rejt-value-node",
-            style: style.li
-        }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
-            className: "rejt-name",
-            style: style.name
-        }, name, ": "), result, minusElement);
+        return null;
+    // return (
+    //     <li className="rejt-value-node" style={style.li}>
+    //         <span className="rejt-name" style={style.name}>{name}: </span>{result}
+    //     </li>
+    // );
     }
     constructor(props){
         super(props);
@@ -496,23 +495,15 @@ const $96531d4eb44d63bb$var$defaultProps = {
         const collapseValue = " {...}";
         const numberOfItems = keyList.length;
         const itemName = numberOfItems > 1 ? "keys" : "key";
-        let minusElement = null;
-        // Check if readOnly is activated
-        if (!readOnly(name, data, keyPath, deep, dataType)) {
-            const minusMenuLayout = /*#__PURE__*/ (0, $a6H0q$react).cloneElement(minusMenuElement, {
-                onClick: handleRemove,
-                className: "rejt-minus-menu",
-                style: minus
-            });
-            minusElement = deep !== -1 ? minusMenuLayout : null;
-        }
+        const minusElement = null;
+        readOnly(name, data, keyPath, deep, dataType);
         /* eslint-disable jsx-a11y/no-static-element-interactions */ return /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-collapsed"
         }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-collapsed-text",
             style: collapsed,
             onClick: this.handleCollapseMode
-        }, collapseValue, " ", numberOfItems, " ", itemName), minusElement);
+        }, collapseValue, " ", numberOfItems, " ", itemName));
     /* eslint-enable */ }
     renderNotCollapsed() {
         const { name: name , data: data , keyPath: keyPath , deep: deep , nextDeep: nextDeep , addFormVisible: addFormVisible  } = this.state;
@@ -578,7 +569,7 @@ const $96531d4eb44d63bb$var$defaultProps = {
                 keyPath: keyPath,
                 deep: deep,
                 onSubmitValueParser: onSubmitValueParser
-            })) : /*#__PURE__*/ (0, $a6H0q$react).createElement("span", null, plusMenuLayout, " ", minusElement);
+            })) : /*#__PURE__*/ (0, $a6H0q$react).createElement("span", null, " ");
         }
         return /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-not-collapsed"
@@ -598,14 +589,15 @@ const $96531d4eb44d63bb$var$defaultProps = {
         const { getStyle: getStyle , dataType: dataType  } = this.props;
         const value = collapsed ? this.renderCollapsed() : this.renderNotCollapsed();
         const style = getStyle(name, data, keyPath, deep, dataType);
-        /* eslint-disable jsx-a11y/no-static-element-interactions */ return /*#__PURE__*/ (0, $a6H0q$react).createElement("div", {
+        /* eslint-disable jsx-a11y/no-static-element-interactions */ if (keyPath.includes("startPosition") || keyPath.includes("editionPosition") || keyPath.includes("editionColor") || keyPath.includes("variableTest") || keyPath.includes("damageAffinities") || keyPath.includes("position") || keyPath.includes("localPosition") || keyPath.includes("customDimensions")) return null;
+        return /*#__PURE__*/ (0, $a6H0q$react).createElement("div", {
             className: "rejt-object-node"
         }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             onClick: this.handleCollapseMode
         }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-name",
             style: style.name
-        }, name, " : ")), value);
+        }, name, " ", ":", " ")), value);
     /* eslint-enable */ }
     constructor(props){
         super(props);
@@ -811,20 +803,10 @@ const $d75ab2710d4a52f0$var$defaultProps = {
     }
     renderCollapsed() {
         const { name: name , data: data , keyPath: keyPath , deep: deep  } = this.state;
-        const { handleRemove: handleRemove , readOnly: readOnly , getStyle: getStyle , dataType: dataType , minusMenuElement: minusMenuElement  } = this.props;
-        const { minus: minus , collapsed: collapsed  } = getStyle(name, data, keyPath, deep, dataType);
+        const { getStyle: getStyle , dataType: dataType  } = this.props;
+        const { collapsed: collapsed  } = getStyle(name, data, keyPath, deep, dataType);
         const collapseValue = " [...]";
         const numberOfItems = data.length;
-        let minusElement = null;
-        // Check if readOnly is activated
-        if (!readOnly(name, data, keyPath, deep, dataType)) {
-            const minusMenuLayout = /*#__PURE__*/ (0, $a6H0q$react).cloneElement(minusMenuElement, {
-                onClick: handleRemove,
-                className: "rejt-minus-menu",
-                style: minus
-            });
-            minusElement = deep !== -1 ? minusMenuLayout : null;
-        }
         const itemName = numberOfItems > 1 ? "items" : "item";
         /* eslint-disable jsx-a11y/no-static-element-interactions */ return /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-collapsed"
@@ -832,7 +814,7 @@ const $d75ab2710d4a52f0$var$defaultProps = {
             className: "rejt-collapsed-text",
             style: collapsed,
             onClick: this.handleCollapseMode
-        }, collapseValue, " ", numberOfItems, " ", itemName), minusElement);
+        }, collapseValue, " ", numberOfItems, " ", itemName));
     /* eslint-enable */ }
     renderNotCollapsed() {
         const { name: name , data: data , keyPath: keyPath , deep: deep , addFormVisible: addFormVisible , nextDeep: nextDeep  } = this.state;
@@ -850,7 +832,7 @@ const $d75ab2710d4a52f0$var$defaultProps = {
             minusElement = deep !== -1 ? minusMenuLayout : null;
         }
         const list = data.map((item, index)=>/*#__PURE__*/ (0, $a6H0q$react).createElement((0, $8eee1650ad9f7cc4$export$2e2bcd8739ae039), {
-                key: index,
+                key: keyPath.join("_"),
                 name: `${index}`,
                 data: item,
                 keyPath: keyPath,
@@ -897,7 +879,7 @@ const $d75ab2710d4a52f0$var$defaultProps = {
                 keyPath: keyPath,
                 deep: deep,
                 onSubmitValueParser: onSubmitValueParser
-            })) : /*#__PURE__*/ (0, $a6H0q$react).createElement("span", null, plusMenuLayout, " ", minusElement);
+            })) : /*#__PURE__*/ (0, $a6H0q$react).createElement("span", null, " ");
         }
         const startObject = "[";
         const endObject = "]";
@@ -919,14 +901,15 @@ const $d75ab2710d4a52f0$var$defaultProps = {
         const { dataType: dataType , getStyle: getStyle  } = this.props;
         const value = collapsed ? this.renderCollapsed() : this.renderNotCollapsed();
         const style = getStyle(name, data, keyPath, deep, dataType);
-        /* eslint-disable jsx-a11y/no-static-element-interactions */ return /*#__PURE__*/ (0, $a6H0q$react).createElement("div", {
+        /* eslint-disable jsx-a11y/no-static-element-interactions */ if (keyPath.includes("overridenAttributes") || keyPath.includes("abilityScores") || keyPath.includes("savingThrows") || keyPath.includes("skills") || keyPath.includes("attack1") || keyPath.includes("attack2") || keyPath.includes("attack3") || keyPath.includes("localPosition") || keyPath.includes("flavorFlags") || keyPath.includes("functors") || keyPath.includes("staticRoleNames") || keyPath.includes("userProps") || keyPath.includes("occurencesList") || keyPath.includes("destinationsList")) return null;
+        return /*#__PURE__*/ (0, $a6H0q$react).createElement("div", {
             className: "rejt-array-node"
         }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             onClick: this.handleCollapseMode
         }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-name",
             style: style.name
-        }, name, " : ")), value);
+        }, name, " ", ":", " ")), value);
     /* eslint-enable */ }
     constructor(props){
         super(props);
@@ -1115,8 +1098,8 @@ const $a2103bd4ea07bc32$var$defaultProps = {
     keyPath: [],
     deep: 0,
     handleUpdateValue: ()=>{},
-    editButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "e"),
-    cancelButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "c"),
+    editButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "Apply"),
+    cancelButtonElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("button", null, "Cancel"),
     minusMenuElement: /*#__PURE__*/ (0, $a6H0q$react).createElement("span", null, " - ")
 };
 /* ************************************* */ /* ********      COMPONENT      ******** */ /* ************************************* */ class $a2103bd4ea07bc32$var$JsonFunctionValue extends (0, $a6H0q$Component) {
@@ -1165,6 +1148,7 @@ const $a2103bd4ea07bc32$var$defaultProps = {
             Escape: this.handleCancelEdit,
             Enter: this.handleEdit
         };
+        console.log("keyPath", keyPath);
         const style = getStyle(name, originalValue, keyPath, deep, dataType);
         let result = null;
         let minusElement = null;
@@ -1186,27 +1170,20 @@ const $a2103bd4ea07bc32$var$defaultProps = {
                 className: "rejt-edit-form",
                 style: style.editForm
             }, textareaElementLayout, " ", cancelButtonElementLayout, editButtonElementLayout);
-            minusElement = null;
-        } else {
-            /* eslint-disable jsx-a11y/no-static-element-interactions */ result = /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
-                className: "rejt-value",
-                style: style.value,
-                onClick: resultOnlyResult ? null : this.handleEditMode
-            }, value);
-            /* eslint-enable */ const minusMenuLayout = /*#__PURE__*/ (0, $a6H0q$react).cloneElement(minusMenuElement, {
-                onClick: handleRemove,
-                className: "rejt-minus-menu",
-                style: style.minus
-            });
-            minusElement = resultOnlyResult ? null : minusMenuLayout;
-        }
-        return /*#__PURE__*/ (0, $a6H0q$react).createElement("li", {
+        } else /* eslint-disable jsx-a11y/no-static-element-interactions */ result = /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
+            className: "rejt-value",
+            style: style.value,
+            onClick: resultOnlyResult ? null : this.handleEditMode
+        }, value);
+        if (!result || result === "") return null;
+        if (keyPath.includes("textLine") || keyPath.includes("title") || keyPath.includes("description") || keyPath.includes("name") || keyPath.includes("stringValue") || keyPath.includes("stringsList")) return /*#__PURE__*/ (0, $a6H0q$react).createElement("li", {
             className: "rejt-function-value-node",
             style: style.li
         }, /*#__PURE__*/ (0, $a6H0q$react).createElement("span", {
             className: "rejt-name",
             style: style.name
-        }, name, " : "), result, minusElement);
+        }, name, " : "), result);
+        return null;
     }
     constructor(props){
         super(props);
@@ -1219,7 +1196,7 @@ const $a2103bd4ea07bc32$var$defaultProps = {
             name: props.name,
             keyPath: keyPath,
             deep: props.deep,
-            editEnabled: false,
+            editEnabled: true,
             inputRef: null
         };
         // Bind
@@ -1632,7 +1609,7 @@ const $6a9e0261faea78ad$export$2ab9a8f9f1186f14 = {
 
 
 
-/* ************************************* */ /* ********      VARIABLES      ******** */ /* ************************************* */ // Prop types
+/* ************************************* */ /* ********    VARIABLES    ******** */ /* ************************************* */ // Prop types
 const $7f4e35afd817384e$var$propTypes = {
     data: (0, $a6H0q$proptypes).any.isRequired,
     rootName: (0, $a6H0q$proptypes).string,
@@ -1693,13 +1670,13 @@ const $7f4e35afd817384e$var$defaultProps = {
     /* eslint-enable no-unused-vars */ allowFunctionEvaluation: true
 };
 const $7f4e35afd817384e$var$createParsingFunction = (allowFunctionEvaluation)=>(isEditMode, keyPath, deep, name, rawValue)=>(0, $9f060e374a15eed4$export$2e2bcd8739ae039)(rawValue, allowFunctionEvaluation);
-/* ************************************* */ /* ********      COMPONENT      ******** */ /* ************************************* */ class $7f4e35afd817384e$export$77412d412e77b482 extends (0, $a6H0q$Component) {
+/* ************************************* */ /* ********    COMPONENT    ******** */ /* ************************************* */ class $7f4e35afd817384e$export$77412d412e77b482 extends (0, $a6H0q$Component) {
     componentWillReceiveProps(nextProps) {
         this.setState({
             data: nextProps.data,
             rootName: nextProps.rootName
         });
-        let onSubmitValueParserWasGenerated = this.state.onSubmitValueParserWasGenerated;
+        let { onSubmitValueParserWasGenerated: onSubmitValueParserWasGenerated  } = this.state;
         if (nextProps.onSubmitValueParser && nextProps.onSubmitValueParser !== this.state.onSubmitValueParser) {
             // We just added a new submit value parser, so this is definitely
             // not our default parser anymore
