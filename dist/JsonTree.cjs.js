@@ -1125,7 +1125,7 @@ const $d3a1b610f878e9aa$var$defaultProps = {
         const { editEnabled: editEnabled , inputRef: inputRef , name: name , value: value , keyPath: keyPath , deep: deep  } = this.state;
         const { readOnly: readOnly , dataType: dataType  } = this.props;
         const readOnlyResult = readOnly(name, value, keyPath, deep, dataType);
-        if (editEnabled && !readOnlyResult && typeof inputRef.focus === "function") inputRef.focus();
+        if (editEnabled && !readOnlyResult && inputRef !== null && typeof inputRef.focus === "function") inputRef.focus();
     }
     handleEdit() {
         const { handleUpdateValue: handleUpdateValue , originalValue: originalValue , logger: logger , onSubmitValueParser: onSubmitValueParser , keyPath: keyPath  } = this.props;

@@ -83,7 +83,7 @@ class JsonFunctionValue extends Component {
         const { readOnly, dataType } = this.props;
         const readOnlyResult = readOnly(name, value, keyPath, deep, dataType);
 
-        if (editEnabled && !readOnlyResult && (typeof inputRef.focus === 'function')) {
+        if (editEnabled && !readOnlyResult && (inputRef !== null) && (typeof inputRef.focus === 'function')) {
             inputRef.focus();
         }
     }
